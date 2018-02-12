@@ -47,6 +47,9 @@ lazy val web = project
     npmDependencies in Compile ++= Seq("react" -> "15.6.1",
                                        "react-dom" -> "15.6.1"),
     npmDevDependencies in Compile ++= Seq("html-webpack-plugin" -> "2.30.1"),
+    webpackBundlingMode := BundlingMode.LibraryOnly(),
+    // Inspiration to implement --hot could be found at https://github.com/bphelan/scalajs-multiclient-example
+    webpackDevServerExtraArgs in fastOptJS := Seq("--inline"),
     webpackConfigFile in fastOptJS := Some(
       baseDirectory.value / "webpack-fastopt.config.js")
   )

@@ -7,6 +7,11 @@
 </head>
 <body style="margin: 10px">
 <div id="root"></div>
-<script type="text/javascript" src="./web-fastopt-bundle.js"></script>
+<script type="text/javascript" src="./web-fastopt-library.js"></script>
+<script>
+  var exports = window;
+  exports.require = window["ScalaJSBundlerLibrary"].require;
+</script>
+<script src="./web-fastopt.js"></script>
 </body>
 </html>

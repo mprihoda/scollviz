@@ -1,6 +1,6 @@
 package net.prihoda.scala.coll.web
 
-import diode.react.ModelProxy
+import diode.react.{ ModelProxy, ReactConnectProxy }
 import org.scalajs.dom._
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
@@ -19,7 +19,12 @@ object Visualization {
               ^.href := "https://github.com/suzaku-io/diode/tree/master/examples/simple"
             )("Source code")
           ),
-          CounterView.component(proxy)
+          CounterView(
+            proxy().counter,
+            proxy.dispatchCB(Increase(2)),
+            proxy.dispatchCB(Decrease(1)),
+            proxy.dispatchCB(Reset)
+          )
         )
       }
       .build

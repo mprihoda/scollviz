@@ -6,6 +6,13 @@ var tmplDir = path.resolve(baseDir, 'public')
 
 module.exports = require('./scalajs.webpack.config')
 
+module.exports.devServer = {
+  contentBase: [
+    path.resolve('.'),
+    path.resolve(baseDir)
+  ]
+}
+
 module.exports.plugins = [
-  new HtmlWebpackPlugin({ template: path.resolve(tmplDir, 'index-dev.html'), inject: false })
+  new HtmlWebpackPlugin({ template: path.resolve(tmplDir, 'index-fastopt.html'), inject: false })
 ]
