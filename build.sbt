@@ -34,15 +34,19 @@ lazy val root = (project in file(".")).settings(commonSettings)
 
 lazy val web = project
   .settings(commonSettings)
-  .enablePlugins(ScalaJSPlugin, WorkbenchPlugin)
+  .enablePlugins(ScalaJSBundlerPlugin)
   .settings(
     scalaJSUseMainModuleInitializer := true,
     scalacOptions += "-P:scalajs:sjsDefinedByDefault",
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "0.9.3",
-      "com.lihaoyi" %%% "scalatags" % "0.6.7",
-      "io.suzaku" %%% "diode-core" % "1.1.3"
+      "io.suzaku" %%% "diode-core" % "1.1.3",
+      "io.suzaku" %%% "diode-react" % "1.1.3",
+      "com.github.japgolly.scalajs-react" %%% "core" % "1.1.1"
     ),
-    workbenchDefaultRootObject := Some(
-      ("web/target/scala-2.12/classes/index.html", "web/target/scala-2.12"))
+    npmDependencies in Compile ++= Seq("react" -> "15.6.1",
+                                       "react-dom" -> "15.6.1"),
+    npmDevDependencies in Compile ++= Seq("html-webpack-plugin" -> "2.30.1"),
+    webpackConfigFile in fastOptJS := Some(
+      baseDirectory.value / "webpack-fastopt.config.js")
   )

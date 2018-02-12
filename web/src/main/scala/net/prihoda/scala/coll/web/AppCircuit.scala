@@ -1,6 +1,7 @@
 package net.prihoda.scala.coll.web
 
 import diode._
+import diode.react.ReactConnector
 
 // Define the root of our application model
 case class RootModel(counter: Int)
@@ -16,7 +17,7 @@ case object Reset extends Action
   * AppCircuit provides the actual instance of the `RootModel` and all the action
   * handlers we need. Everything else comes from the `Circuit`
   */
-object AppCircuit extends Circuit[RootModel] {
+object AppCircuit extends Circuit[RootModel] with ReactConnector[RootModel] {
   // define initial value for the application model
   def initialModel = RootModel(0)
 

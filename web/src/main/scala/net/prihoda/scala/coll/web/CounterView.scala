@@ -1,7 +1,34 @@
 package net.prihoda.scala.coll.web
 
-import diode._
-import scalatags.JsDom.all._
+import diode.react.ModelProxy
+import japgolly.scalajs.react._
+import japgolly.scalajs.react.vdom.html_<^._
+
+object CounterView {
+  val component
+    : ScalaComponent[ModelProxy[RootModel], Unit, Unit, CtorType.Props] =
+    ScalaComponent
+      .builder[ModelProxy[RootModel]]("CounterView")
+      .render_P { proxy =>
+        <.div(
+          <.h3("Counter"),
+          <.p("Value = ", <.b(proxy().counter)),
+          <.div(
+            ^.className := "btn-group",
+            <.button(^.className := "btn btn-default",
+                     ^.onClick --> proxy.dispatchCB(Increase(2)),
+                     "Increase"),
+            <.button(^.className := "btn btn-default",
+                     ^.onClick --> proxy.dispatchCB(Decrease(1)),
+                     "Decrease"),
+            <.button(^.className := "btn btn-default",
+                     ^.onClick --> proxy.dispatchCB(Reset),
+                     "Reset")
+          )
+        )
+      }
+      .build
+}
 
 /**
   * Counter view renders the counter value and provides interaction through
@@ -9,7 +36,6 @@ import scalatags.JsDom.all._
   *
   * @param counter  Model reader for the counter value
   * @param dispatch Dispatcher
-  */
 class CounterView(counter: ModelRO[Int], dispatch: Dispatcher) {
   def render = {
     div(
@@ -24,3 +50,4 @@ class CounterView(counter: ModelRO[Int], dispatch: Dispatcher) {
     )
   }
 }
+  */
