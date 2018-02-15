@@ -4,12 +4,13 @@ import diode.react.ModelProxy
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.component.Scala.{Component, Unmounted}
 import japgolly.scalajs.react.vdom.html_<^._
+import slinky.scalajsreact.Converters._
 
 object ClassDiagramRoot {
 
   class Backend($ : BackendScope[ModelProxy[ClassDiagram], Unit]) {
-    def renderClassView(c: ClassDescriptor): VdomElement = {
-      ClassView(c.name, s"${c.pkg}.${c.name}")
+    def renderClassView(c: ClassDescriptor): TagMod = {
+      ClassView(name = c.name)
     }
 
     def render(proxy: ModelProxy[ClassDiagram]): VdomElement = {

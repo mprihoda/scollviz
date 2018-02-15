@@ -1,19 +1,17 @@
+var webpack = require("webpack");
 var path = require("path");
+
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-  entry: {
-    "web-fastopt": ["./web-fastopt-entrypoint.js"],
-    "launcher": ["./hot-launcher.js"]
+  "entry": {
+    "web-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
   },
-  output: {
-    path: __dirname,
-    filename: "[name]-library.js",
-    library: "appLibrary",
-    libraryTarget: "var"
+  "output": {
+    "path": path.resolve(__dirname, "../../../../build"),
+    "filename": "[name]-bundle.js"
   },
-  devtool: "source-map",
   resolve: {
     alias: {
       "resources": path.resolve(__dirname, "../../../../src/main/resources")
@@ -37,18 +35,20 @@ module.exports = {
           }
         ]
       }
-    ],
-    noParse: (content) => {
-      return content.endsWith("-fastopt.js");
-    }
+    ]
   },
   plugins: [
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, "../../../../public") }
     ]),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../../../../public/index-fastopt.html"),
-      inject: false
-    })
+      template: path.resolve(__dirname, "../../../../public/index.html")
+    }),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
+    new webpack.optimize.UglifyJsPlugin()
   ]
 }
